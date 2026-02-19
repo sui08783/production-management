@@ -1,4 +1,4 @@
-package com.sui.production_management.service;
+package com.sui.production_management.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskEntity {
+public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +31,12 @@ public class TaskEntity {
   @Column(name = "deadline", nullable = false)
   private LocalDate deadline;
 
+
   @Column(name = "quantity", nullable = false)
   private int quantity;
 
   @Column(name = "create_day", nullable = false)
-  private LocalDateTime createDay;
+  private LocalDate createDay;
 
 
 
