@@ -9,4 +9,8 @@ public interface OrderService {
   List<Order> getAllOrders();
 
   Order createOrder(Order order);
+
+  void deleteOrder(Long id);
+
+
 }
