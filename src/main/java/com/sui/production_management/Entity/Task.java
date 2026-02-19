@@ -1,4 +1,4 @@
-package com.sui.production_management.service;
+package com.sui.production_management.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskEntity {
+public class Task {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,12 @@ public class TaskEntity {
   @Column(name = "deadline", nullable = false)
   private LocalDate deadline;
 
+
   @Column(name = "quantity", nullable = false)
   private int quantity;
 
   @Column(name = "create_day", nullable = false)
-  private LocalDateTime createDay;
+  private LocalDate createDay;
 
 
 
