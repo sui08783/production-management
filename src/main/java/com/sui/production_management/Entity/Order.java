@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 @Getter
 @Setter
@@ -38,6 +39,7 @@ public class Order {
   private int quantity;
 
   @Column(name = "create_day", nullable = false)
+  @CreatedDate
   private LocalDate createDay;
 
 
