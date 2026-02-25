@@ -1,11 +1,13 @@
 package com.sui.production_management.controller;
 
 import com.sui.production_management.Entity.Order;
+import com.sui.production_management.dto.OrderRequest;
 import com.sui.production_management.service.OrderService;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin(origins = "http://localhost:5174")
 public class OrderController {
 
   public final OrderService orderService;
@@ -31,8 +34,8 @@ public class OrderController {
   }
 
   @PostMapping
-  public Order createOrder(@RequestBody Order order) {
-    return orderService.createOrder(order);
+  public Order createOrder(@RequestBody OrderRequest request) {
+    return orderService.createOrder(request);
   }
 
   @DeleteMapping("/{id}")

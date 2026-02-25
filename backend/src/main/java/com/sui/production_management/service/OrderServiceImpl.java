@@ -1,6 +1,7 @@
 package com.sui.production_management.service;
 
 import com.sui.production_management.Entity.Order;
+import com.sui.production_management.dto.OrderRequest;
 import com.sui.production_management.repository.OrderRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,7 +26,14 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public Order createOrder(@RequestBody Order order) {
+  public Order createOrder(OrderRequest request) {
+
+    Order order = new Order();
+    order.setProductName(request.getProductName());
+    order.setMachineName(request.getMachineName());
+    order.setDeadline(request.getDeadline());
+    order.setQuantity(request.getQuantity());
+    order.setCreateDay(LocalDate.now());
     return orderRepository.save(order);
   }
 
