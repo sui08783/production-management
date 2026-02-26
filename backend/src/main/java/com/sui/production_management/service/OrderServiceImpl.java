@@ -54,7 +54,8 @@ public class OrderServiceImpl implements OrderService {
       entity.setMachineName(order.getMachineName());
       entity.setDeadline(order.getDeadline());
       entity.setQuantity(order.getQuantity());
-      entity.setCreateDay(order.getCreateDay());
+
+
     }
   }
 }
