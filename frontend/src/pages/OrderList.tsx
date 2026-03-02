@@ -129,25 +129,66 @@ export const OrderList = memo(() => {
                       </Portal>
                     </Dialog.Root>
 
-                    <Button
-                      size="xs"
-                      colorPalette="red"
-                  
-                      onClick={async () => {
-                        const success = await deleteOrder(order.id);
+                    <Dialog.Root key="sm" size="sm">
+                      <Dialog.Trigger asChild>
+                        <Button
+                          size="xs"
+                          colorPalette="red"
+                          // onClick={async () => {
+                          //   const success = await deleteOrder(order.id);
 
-                        if (success) {
-                          await loadOrders();
-                          toaster.create({
-                            description: "削除が成功しました",
-                            type: "success",
-                            closable: true,
-                          });
-                        }
-                      }}
-                    >
-                      削除
-                    </Button>
+                          //   if (success) {
+                          //     await loadOrders();
+                          //     toaster.create({
+                          //       description: "削除が成功しました",
+                          //       type: "success",
+                          //       closable: true,
+                          //     });
+                          //   }
+                          // }}
+                        >
+                          削除
+                        </Button>
+                      </Dialog.Trigger>
+                      <Portal>
+                        <Dialog.Backdrop />
+                        <Dialog.Positioner>
+                          <Dialog.Content>
+                            <Dialog.Header>
+                              <Dialog.Title>工程削除</Dialog.Title>
+                            </Dialog.Header>
+                            <Dialog.Body>
+                              <p>工程を削除しようとしています。
+                                本当に削除しますか？</p>
+                            </Dialog.Body>
+                            <Dialog.Footer>
+                              <Dialog.ActionTrigger asChild>
+                                <Button variant="outline">キャンセル</Button>
+                              </Dialog.ActionTrigger>
+                              <Button colorPalette="red"
+                                onClick={async () => {
+                                  const success = await deleteOrder(order.id);
+
+                                  if (success) {
+                                    await loadOrders();
+                                    toaster.create({
+                                      description: "削除が成功しました",
+                                      type: "success",
+                                      closable: true,
+                                    });
+                                  }
+                                }}
+                              >
+                                削除する
+                              </Button>
+                            </Dialog.Footer>
+                            <Dialog.CloseTrigger asChild>
+                              <CloseButton size="sm" />
+                            </Dialog.CloseTrigger>
+                          </Dialog.Content>
+                        </Dialog.Positioner>
+                      </Portal>
+                    </Dialog.Root>
                   </HStack>
                 </Table.Cell>
               </Table.Row>
