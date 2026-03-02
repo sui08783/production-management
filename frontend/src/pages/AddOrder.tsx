@@ -8,7 +8,7 @@ export const AddOrder = memo(() => {
   const [quantity, setQuantity] = useState<number>(0);
   const [response, setResponse] = useState("");
 
-  const sendDate = () => {
+  const sendData = () => {
     fetch("http://localhost:8080/orders", {
       method: "POST",
       headers: {
@@ -48,7 +48,7 @@ export const AddOrder = memo(() => {
             <Input type="number" value={quantity ?? ""} onChange={(e) => setQuantity(Number(e.target.value))} placeholder="数量を入力" />
           </Field.Root>
 
-          <Button colorPalette="blue" onClick={sendDate}>
+          <Button colorPalette="blue" onClick={sendData}>
             登録する
           </Button>
         </Stack>

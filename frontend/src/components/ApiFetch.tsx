@@ -1,14 +1,9 @@
-import { useEffect, useState } from "react";
+
 import type { Order } from "../types/api";
+import { useLoadOrders } from "@/hooks/useLoadOrders";
 
 export const ApiFetch = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8080/orders")
-      .then((res) => res.json())
-      .then((data) => setOrders(data));
-  }, []);
+  const { orders } = useLoadOrders();
 
   return (
     <div>
