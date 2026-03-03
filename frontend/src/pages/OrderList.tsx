@@ -158,14 +158,14 @@ export const OrderList = memo(() => {
                               <Dialog.Title>工程削除</Dialog.Title>
                             </Dialog.Header>
                             <Dialog.Body>
-                              <p>工程を削除しようとしています。
-                                本当に削除しますか？</p>
+                              <p>工程を削除しようとしています。 本当に削除しますか？</p>
                             </Dialog.Body>
                             <Dialog.Footer>
                               <Dialog.ActionTrigger asChild>
                                 <Button variant="outline">キャンセル</Button>
                               </Dialog.ActionTrigger>
-                              <Button colorPalette="red"
+                              <Button
+                                colorPalette="red"
                                 onClick={async () => {
                                   const success = await deleteOrder(order.id);
 

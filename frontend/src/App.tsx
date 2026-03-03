@@ -1,6 +1,7 @@
 // App.tsx
 import { BrowserRouter } from "react-router-dom";
-import { Router } from "./components/router/Router";
+import { Router } from "./router/Router";
+
 
 
 export default function App() {
