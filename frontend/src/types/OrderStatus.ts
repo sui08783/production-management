@@ -1,6 +1,8 @@
-
-// orderStatusの型を定義 
+// orderStatusの型を定義
 export type OrderStatus =
-  | "NOT_STARTED"
-  | "PROCESSING"
-  | "COMPLETED";
+  | "NOT_STARTED" // 未着手
+  | "PROCESSING" // 加工中
+  | "HEAT_TREATMENT" //熱処理
+  | "GRINDING" //研磨
+  | "PACKING" //袋詰め
+  | "COMPLETED"; //完了

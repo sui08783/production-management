@@ -1,5 +1,5 @@
-import { memo, useEffect, useState } from "react";
-import { Box, Button, createListCollection, Field, Heading, Input, Portal, Select, Stack, Text } from "@chakra-ui/react";
+import { memo, useState } from "react";
+import { Box, Button, createListCollection, Field, Heading, Input, Portal, Select, Stack } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 
 export const AddOrder = memo(() => {
@@ -109,6 +109,9 @@ const frameworks = createListCollection({
   items: [
     { label: "未着手", value: "NOT_STARTED" },
     { label: "加工中", value: "PROCESSING" },
+    { label: "熱処理", value: "HEAT_TREATMENT" },
+    { label: "研磨", value: "GRINDING" },
+    { label: "袋詰め", value: "PACKING" },
     { label: "完了", value: "COMPLETED" },
   ],
 });

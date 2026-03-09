@@ -70,7 +70,7 @@ export const OrderRow = memo((props: Props) => {
                       order={editingOrder}
                       productName={productName}
                       machineName={machineName}
-                      status={status}
+                      status={orderStatus[order.status]}
                       deadline={deadline}
                       quantity={quantity}
                       setProductName={setProductName}
