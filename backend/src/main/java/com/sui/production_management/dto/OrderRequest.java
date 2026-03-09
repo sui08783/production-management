@@ -9,6 +9,8 @@ public class OrderRequest {
 
   private String machineName;
 
+  private String status;
+
   private LocalDate deadline;
 
   private int quantity;
