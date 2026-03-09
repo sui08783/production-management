@@ -4,6 +4,7 @@ export const useUpdateOrder = () => {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [productName, setProductName] = useState("");
   const [machineName, setMachineName] = useState("");
+  const [status, setStatus] = useState("");
   const [deadline, setDeadline] = useState("");
   const [quantity, setQuantity] = useState<number>(0);
   const [response, setResponse] = useState("");
@@ -17,7 +18,7 @@ export const useUpdateOrder = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ productName: productName, machineName: machineName, deadline: deadline, quantity: quantity }),
+        body: JSON.stringify({ productName: productName, machineName: machineName, status: status, deadline: deadline, quantity: quantity }),
       });
 
       if (!res.ok) {
@@ -28,5 +29,5 @@ export const useUpdateOrder = () => {
       return false;
     }
   };
-  return { updateData, editingId, setEditingId, productName, setProductName, machineName, setMachineName, deadline, setDeadline, quantity, setQuantity, response, setResponse };
+  return { updateData, editingId, setEditingId, productName, setProductName, machineName, setMachineName, status, setStatus, deadline, setDeadline, quantity, setQuantity, response, setResponse };
 };

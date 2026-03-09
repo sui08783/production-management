@@ -1,9 +1,11 @@
-import { Box, Button, CloseButton, Dialog, Field, HStack, Input, Portal, Stack, Table } from "@chakra-ui/react";
-import { memo } from "react";
+import { Button, CloseButton, Dialog, HStack, Portal, Table } from "@chakra-ui/react";
+import { memo, useEffect, useState } from "react";
 import { toaster } from "../ui/toaster";
 import type { Order } from "@/types/api";
 import { useDeleteOrder } from "@/hooks/useDeleteOrder";
 import { useUpdateOrder } from "@/hooks/useUpdateOrder";
+import { EditOrderDialog } from "./EditOrderDialog";
+import { orderStatus } from "@/constains/orderStatus";
 
 type Props = {
   order: Order;
@@ -15,13 +17,27 @@ export const OrderRow = memo((props: Props) => {
 
   const { deleteOrder } = useDeleteOrder();
 
-  const { updateData, productName, machineName, deadline, quantity, setProductName, setMachineName, setDeadline, setQuantity } = useUpdateOrder();
+  const { updateData, productName, machineName, status, deadline, quantity, setEditingId, setProductName, setMachineName, setStatus, setDeadline, setQuantity } = useUpdateOrder();
+
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+
+  useEffect(() => {
+    if (!editingOrder) return;
+
+    setEditingId(editingOrder.id);
+    setProductName(editingOrder.productName);
+    setMachineName(editingOrder.machineName);
+    setStatus(editingOrder.status);
+    setDeadline(editingOrder.deadline);
+    setQuantity(editingOrder.quantity);
+  }, [editingOrder]);
 
   return (
     <Table.Row key={order.id} _hover={{ bg: "gray.50" }}>
       <Table.Cell>{order.id}</Table.Cell>
       <Table.Cell>{order.productName}</Table.Cell>
       <Table.Cell>{order.machineName}</Table.Cell>
+      <Table.Cell>{orderStatus[order.status]}</Table.Cell>
       <Table.Cell>{order.deadline}</Table.Cell>
       <Table.Cell fontWeight="bold">{order.quantity}</Table.Cell>
       <Table.Cell>{order.createDay}</Table.Cell>
@@ -33,11 +49,7 @@ export const OrderRow = memo((props: Props) => {
                 size="xs"
                 colorPalette="blue"
                 onClick={() => {
-                  order.id;
-                  setProductName(order.productName);
-                  setMachineName(order.machineName);
-                  setDeadline(order.deadline);
-                  setQuantity(order.quantity);
+                  setEditingOrder(order);
                 }}
               >
                 編集
@@ -52,31 +64,22 @@ export const OrderRow = memo((props: Props) => {
                     <Dialog.Title>注文編集</Dialog.Title>
                   </Dialog.Header>
 
-                  <Dialog.Body>
-                    <Box w="100%">
-                      <Stack gap="4">
-                        <Field.Root>
-                          <Field.Label>製品名</Field.Label>
-                          <Input value={productName} onChange={(e) => setProductName(e.target.value)} />
-                        </Field.Root>
-
-                        <Field.Root>
-                          <Field.Label>機械名</Field.Label>
-                          <Input value={machineName} onChange={(e) => setMachineName(e.target.value)} />
-                        </Field.Root>
-
-                        <Field.Root>
-                          <Field.Label>納期</Field.Label>
-                          <Input type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
-                        </Field.Root>
-
-                        <Field.Root>
-                          <Field.Label>数量</Field.Label>
-                          <Input type="number" value={quantity ?? ""} onChange={(e) => setQuantity(Number(e.target.value))} />
-                        </Field.Root>
-                      </Stack>
-                    </Box>
-                  </Dialog.Body>
+                  {/* 工程データがあるときに、編集用のダイアログを表示 */}
+                  {editingOrder && (
+                    <EditOrderDialog
+                      order={editingOrder}
+                      productName={productName}
+                      machineName={machineName}
+                      status={status}
+                      deadline={deadline}
+                      quantity={quantity}
+                      setProductName={setProductName}
+                      setMachineName={setMachineName}
+                      setStatus={setStatus}
+                      setDeadline={setDeadline}
+                      setQuantity={setQuantity}
+                    />
+                  )}
 
                   <Dialog.Footer>
                     <Dialog.ActionTrigger asChild>
