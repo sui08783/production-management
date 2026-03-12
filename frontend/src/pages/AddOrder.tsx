@@ -1,6 +1,7 @@
 import { memo, useState } from "react";
-import { Box, Button, createListCollection, Field, Heading, Input, Portal, Select, Stack } from "@chakra-ui/react";
+import { Box, Button, Field, Heading, Input, Portal, Select, Stack } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
+import { orderStatusList } from "@/constains/orderStatus";
 
 export const AddOrder = memo(() => {
   const [productName, setProductName] = useState("");
@@ -62,7 +63,7 @@ export const AddOrder = memo(() => {
             <Input value={machineName} onChange={(e) => setMachineName(e.target.value)} placeholder="機械名を入力" />
           </Field.Root>
 
-          <Select.Root key="sm" size="sm" collection={frameworks} onValueChange={(e) => setStatus(e.value[0])}>
+          <Select.Root key="sm" size="sm" collection={orderStatusList} onValueChange={(e) => setStatus(e.value[0])}>
             <Select.HiddenSelect />
             <Select.Label>加工状態</Select.Label>
             <Select.Control>
@@ -76,9 +77,9 @@ export const AddOrder = memo(() => {
             <Portal>
               <Select.Positioner>
                 <Select.Content>
-                  {frameworks.items.map((framework) => (
-                    <Select.Item item={framework} key={framework.value}>
-                      {framework.label}
+                  {orderStatusList.items.map((orderStatusItem) => (
+                    <Select.Item item={orderStatusItem} key={orderStatusItem.value}>
+                      {orderStatusItem.label}
                       <Select.ItemIndicator />
                     </Select.Item>
                   ))}
@@ -104,14 +105,4 @@ export const AddOrder = memo(() => {
       </Box>
     </>
   );
-});
-const frameworks = createListCollection({
-  items: [
-    { label: "未着手", value: "NOT_STARTED" },
-    { label: "加工中", value: "PROCESSING" },
-    { label: "熱処理", value: "HEAT_TREATMENT" },
-    { label: "研磨", value: "GRINDING" },
-    { label: "袋詰め", value: "PACKING" },
-    { label: "完了", value: "COMPLETED" },
-  ],
 });

@@ -1,5 +1,5 @@
 import { useLoadOrders } from "@/hooks/useLoadOrders";
-import type { Order } from "@/types/api";
+import type { Order } from "@/types/order";
 
 import { Box, Heading, Table } from "@chakra-ui/react";
 import { memo } from "react";

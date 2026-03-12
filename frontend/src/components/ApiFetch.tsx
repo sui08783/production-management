@@ -1,5 +1,4 @@
-
-import type { Order } from "../types/api";
+import type { Order } from "../types/order";
 import { useLoadOrders } from "@/hooks/useLoadOrders";
 
 export const ApiFetch = () => {

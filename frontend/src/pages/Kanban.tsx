@@ -1,6 +1,6 @@
 import { useLoadOrders } from "@/hooks/useLoadOrders";
-import type { Order } from "@/types/api";
-import { Box, Heading,  Text } from "@chakra-ui/react";
+import type { Order } from "@/types/order";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
 

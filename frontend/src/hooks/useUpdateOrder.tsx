@@ -10,7 +10,7 @@ export const useUpdateOrder = () => {
   const [response, setResponse] = useState("");
 
   const updateData = async () => {
-    if (editingId == null) return;
+    if (editingId == null) return false;
 
     try {
       const res = await fetch(`http://localhost:8080/orders/${editingId}`, {
