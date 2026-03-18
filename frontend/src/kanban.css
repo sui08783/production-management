@@ -1,0 +1,29 @@
+.board {
+  display: grid;
+  grid-template-columns: 120px repeat(3, 1fr);
+  gap: 8px;
+}
+
+.header {
+  font-weight: bold;
+  text-align: center;
+}
+
+.machine {
+  font-weight: bold;
+}
+
+.cell {
+  min-height: 80px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  background: #fafafa;
+}
+
+.card {
+  background: white;
+  border: 1px solid #999;
+  padding: 6px;
+  margin-bottom: 4px;
+  cursor: grab;
+}

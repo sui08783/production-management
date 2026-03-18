@@ -1,10 +1,10 @@
 import { memo } from "react";
 
 import { Route, Routes } from "react-router-dom";
-import { Page404 } from "@/pages/Page404";
-import { AddOrder } from "../pages/AddOrder";
-import { OrderList } from "@/pages/OrderList";
-import { Kanban } from "@/pages/Kanban";
+import { Page404 } from "@/components/pages/Page404";
+import { AddOrder } from "../components/pages/AddOrder";
+import { OrderList } from "@/components/pages/OrderList";
+import { Kanban } from "@/components/pages/Kanban";
 
 export const Router = memo(() => {
   return (
