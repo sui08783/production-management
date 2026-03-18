@@ -1,13 +1,16 @@
-import { DndContext, useDroppable } from "@dnd-kit/core";
+import { DndContext } from "@dnd-kit/core";
 import { useState } from "react";
 import { Droppable } from "../kanban/Droppable";
 import { Draggable } from "../kanban/Draggable";
-import { css } from "@emotion/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
+import { useLoadOrders } from "@/hooks/useLoadOrders";
 
 const machines = ["機械A", "機械B", "機械C"];
 const days = ["月", "火", "水", "木", "金"];
 
 export const Kanban = () => {
+  const { orders, loadOrders } = useLoadOrders();
+
   const [cells, setCells] = useState({
     "機械A-月": [
       { id: "1", name: "注文A" },
@@ -25,7 +28,6 @@ export const Kanban = () => {
 
         // ドロップされた場所がセル以外だった場合はリターン
         if (!over) return;
-
 
         const cardId = active.id;
         const toCellId = over.id;
@@ -62,57 +64,73 @@ export const Kanban = () => {
         });
       }}
     >
-      <div>
-        {/* 曜日ヘッダー */}
-        <div style={{ display: "flex" }}>
-          <div style={{ width: 80 }}></div> {/* 左上の空白 */}
-          {days.map((day) => (
-            <div
-              key={day}
-              style={{
-                width: 120,
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              {day}
-            </div>
+      {/* 背景をテーブルUIに寄せる */}
+      <Box bg="gray.50" minH="100vh" p={6}>
+        {/* 外枠（OrderListと同じ雰囲気） */}
+        <Box maxW="1000px" mx="auto" p={6} bg="white" borderWidth="1px" borderRadius="xl" boxShadow="sm">
+          {/* 曜日ヘッダー */}
+          <Flex mb={4}>
+            <Box w="100px" /> {/* 左上の空白 */}
+            {days.map((day) => (
+              <Box key={day} w="120px" textAlign="center" fontWeight="bold" fontSize="sm" color="gray.600" py={2} borderBottom="1px solid" borderColor="gray.200" mx={1}>
+                {day}
+              </Box>
+            ))}
+          </Flex>
+
+          {/* 機械行 */}
+          {machines.map((machine) => (
+            <Flex key={machine} mb={2}>
+              {/* 機械名 */}
+              <Flex w="100px" align="center" justify="center" fontWeight="semibold" fontSize="sm" color="gray.700" borderRight="1px solid" borderColor="gray.200" mr={2}>
+                {machine}
+              </Flex>
+
+              {/* セル */}
+              {days.map((day) => {
+                const cellId = `${machine}-${day}`;
+                return (
+                  <Droppable id={cellId} key={cellId}>
+                    <Box w="120px" minH="120px" p={2} mx={1} bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
+                      {(cells[cellId] || []).length === 0 && (
+                        <Text fontSize="xs" color="gray.400" textAlign="center">
+                          なし
+                        </Text>
+                      )}
+
+                      {(cells[cellId] || []).map((cell) => {
+                        return (
+                          <Draggable key={cell.id} id={cell.id}>
+                            <Box p={2} mb={2} bg="gray.50" borderRadius="md" border="1px solid" borderColor="gray.200" fontSize="sm" cursor="grab" _hover={{ bg: "gray.100" }} _active={{ cursor: "grabbing" }}>
+                              <Text>{cell.name}</Text>
+                            </Box>
+                          </Draggable>
+                        );
+                      })}
+                    </Box>
+                  </Droppable>
+                );
+              })}
+            </Flex>
           ))}
-        </div>
 
-        {/* 機械行 */}
-        {machines.map((machine) => (
-          <div key={machine} style={{ display: "flex" }}>
-            {/* 機械名 */}
-            <div style={{ width: 80 }}>{machine}</div>
+          <Droppable id="unassigned">
+            <Box mb={6} p={4} bg="white" borderWidth="1px" borderRadius="xl" borderColor="gray.200">
+              <Text fontSize="sm" fontWeight="bold" mb={2} color="gray.600">
+                未割り当て
+              </Text>
 
-            {/* セル */}
-            {days.map((day) => {
-              const cellId = `${machine}-${day}`;
-              return (
-                <Droppable
-                  id={cellId}
-                  key={cellId}
-                  style={{
-                    width: 120,
-                    height: 120,
-                    border: "1px solid black",
-                    margin: 4,
-                  }}
-                >
-                  {(cells[cellId] || []).map((cell) => {
-                    return (
-                      <Draggable key={cell.id} id={cell.id}>
-                        {cell.name}
-                      </Draggable>
-                    );
-                  })}
-                </Droppable>
-              );
-            })}
-          </div>
-        ))}
-      </div>
+              <Flex wrap="wrap">
+                <Box p={2} bg="gray.50" border="1px dashed" borderColor="gray.300" borderRadius="md" w="100%" textAlign="center">
+                  <Text fontSize="xs" color="gray.400">
+                    ここにドラッグで戻す（仮）
+                  </Text>
+                </Box>
+              </Flex>
+            </Box>
+          </Droppable>
+        </Box>
+      </Box>
     </DndContext>
   );
 };
