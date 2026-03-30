@@ -31,7 +31,16 @@ public class Order {
   private String productName;
 
   @Column(name = "machine_name", nullable = false)
-  private String machineName;
+  @Enumerated(EnumType.STRING)
+  private MachineAssign machineName=MachineAssign.UNASSIGNED;
+
+  @Column(name = "days", nullable = true)
+  @Enumerated(EnumType.STRING)
+  private DayOfWeek days= DayOfWeek.UNASSIGNED;
+
+
+  @Column(name = "position", nullable = true)
+  private int position;
 
   @Column(name = "status", nullable = false)
   @Enumerated(EnumType.STRING)

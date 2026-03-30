@@ -1,5 +1,6 @@
 package com.sui.production_management.service;
 
+import com.sui.production_management.Entity.MachineAssign;
 import com.sui.production_management.Entity.Order;
 import com.sui.production_management.Entity.OrderStatus;
 import com.sui.production_management.dto.OrderRequest;
@@ -31,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 
     Order order = new Order();
     order.setProductName(request.getProductName());
-    order.setMachineName(request.getMachineName());
+    order.setMachineName(MachineAssign.valueOf(request.getMachineName()));
     order.setStatus(OrderStatus.valueOf(request.getStatus()));
     order.setDeadline(request.getDeadline());
     order.setQuantity(request.getQuantity());
@@ -61,6 +62,13 @@ public class OrderServiceImpl implements OrderService {
 
     }
   }
+
+  @Override
+  public void kanbanUpdate(Long id, Order machineName, Order status, Order days) {
+
+  }
+
+
 }
 
 

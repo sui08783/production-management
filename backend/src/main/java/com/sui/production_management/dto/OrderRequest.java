@@ -9,6 +9,10 @@ public class OrderRequest {
 
   private String machineName;
 
+  private String days;
+
+  private String position;
+
   private String status;
 
   private LocalDate deadline;

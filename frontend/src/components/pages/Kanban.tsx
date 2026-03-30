@@ -1,27 +1,59 @@
 import { DndContext } from "@dnd-kit/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Droppable } from "../kanban/Droppable";
 import { Draggable } from "../kanban/Draggable";
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex, Checkbox } from "@chakra-ui/react";
 import { useLoadOrders } from "@/hooks/useLoadOrders";
+import { useKanbanUpdate } from "@/hooks/useKanbanUpdate";
+import { useKanbanComplete } from "@/hooks/useKanbanComplete";
 
-const machines = ["機械A", "機械B", "機械C"];
-const days = ["月", "火", "水", "木", "金"];
+// セルヘッダー用
+const machines = ["MACHINE_A", "MACHINE_B", "MACHINE_C"];
+const days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"];
+const unassigned = "UNASSIGNED";
 
 export const Kanban = () => {
-  const { orders, loadOrders } = useLoadOrders();
+  const { orders } = useLoadOrders();
 
-  const [cells, setCells] = useState({
-    "機械A-月": [
-      { id: "1", name: "注文A" },
-      { id: "2", name: "注文B" },
-    ],
-    "機械B-火": [{ id: "3", name: "注文C" }],
-  });
+  const kanbanUpdate = useKanbanUpdate();
+
+  const kanbanComplete = useKanbanComplete();
+
+  const [cells, setCells] = useState({});
+
+  useEffect(() => {
+    if (Object.keys(cells).length > 0) return;
+
+    // 機械×曜日の割当用の空の配列
+    const grouped = {};
+
+    // 全ての注文データから、状態が未着手と加工中の注文のみ表示させるためのフィルター
+    const filteredOrders = orders.filter((order) => order.status === "NOT_STARTED" || order.status === "PROCESSING");
+
+    //  セルの位置決め用の機械×曜日のキーを設定
+    filteredOrders.forEach((order) => {
+      //  daysがない場合は未割り当て
+      if (!order.days || order.days === "UNASSIGNED") {
+        if (!grouped[unassigned]) grouped[unassigned] = [];
+        grouped[unassigned].push(order);
+        return;
+      }
+
+      // セルの位置決め用のキー
+      const key = `${order.machineName}-${order.days}`;
+
+      if (!grouped[key]) {
+        grouped[key] = [];
+      }
+      grouped[key].push(order);
+    });
+
+    setCells(grouped);
+  }, [orders]);
 
   return (
     <DndContext
-      onDragEnd={(event) => {
+      onDragEnd={async (event) => {
         // active →現在ドラッグしているカード
         // over →ドロップされた セル
         const { active, over } = event;
@@ -31,6 +63,8 @@ export const Kanban = () => {
 
         const cardId = active.id;
         const toCellId = over.id;
+
+        const [machine, day] = toCellId === unassigned ? ["UNASSIGNED", "UNASSIGNED"] : String(toCellId).split("-");
 
         // prevは更新前の最新のstate(セルID:[注文名])
         // スプレット構文で元の配列をコピー(stateを更新して最新の配列をつかうため)
@@ -49,6 +83,14 @@ export const Kanban = () => {
           // 全セル情報の中から、移動しようとしているカードを探し出し、そのカードのオブジェクトを取り出す
           const movedCard = newCells[fromCellId].find((card) => card.id === cardId);
 
+          const targetCards = prev[toCellId] || [];
+
+          const maxPosition = targetCards.length > 0 ? Math.max(...targetCards.map((c) => c.position || 0)) : 0;
+
+          const newPosition = maxPosition + 1;
+
+          kanbanUpdate.updateData(cardId, machine, day, newPosition);
+
           //  指定のセルIDをもつセルの中に、今回移動するカードが有るかをフィルターし、移動するカード以外の配列を再度作成
           newCells[fromCellId] = prev[fromCellId].filter((card) => card.id !== cardId);
 
@@ -64,10 +106,8 @@ export const Kanban = () => {
         });
       }}
     >
-      {/* 背景をテーブルUIに寄せる */}
       <Box bg="gray.50" minH="100vh" p={6}>
-        {/* 外枠（OrderListと同じ雰囲気） */}
-        <Box maxW="1000px" mx="auto" p={6} bg="white" borderWidth="1px" borderRadius="xl" boxShadow="sm">
+        <Box maxW="auto" mx="auto" p={6} bg="white" borderWidth="1px" borderRadius="xl" boxShadow="sm">
           {/* 曜日ヘッダー */}
           <Flex mb={4}>
             <Box w="100px" /> {/* 左上の空白 */}
@@ -101,8 +141,61 @@ export const Kanban = () => {
                       {(cells[cellId] || []).map((cell) => {
                         return (
                           <Draggable key={cell.id} id={cell.id}>
-                            <Box p={2} mb={2} bg="gray.50" borderRadius="md" border="1px solid" borderColor="gray.200" fontSize="sm" cursor="grab" _hover={{ bg: "gray.100" }} _active={{ cursor: "grabbing" }}>
-                              <Text>{cell.name}</Text>
+                            <Box p={3} mb={2} bg="white" borderRadius="lg" border="1px solid" borderColor="gray.200" boxShadow="sm" fontSize="sm" cursor="grab" _hover={{ bg: "gray.50", boxShadow: "md" }} _active={{ cursor: "grabbing", boxShadow: "lg" }}>
+                              {/* 情報（全部縦） */}
+                              <Flex direction="column" gap={1}>
+                                <Text fontWeight="bold" fontSize="md">
+                                  {cell.productName}
+                                </Text>
+                                <Text color="gray.700">{cell.quantity}本</Text>
+                                <Text color="gray.500" fontSize="xs">
+                                  {cell.deadline}
+                                </Text>
+                              </Flex>
+
+                              {/* 区切り */}
+                              <Box borderTop="1px solid" borderColor="gray.100" my={3} />
+
+                              {/* アクション */}
+                              <Checkbox.Root
+                                size="sm"
+                                colorPalette="cyan"
+                              
+  checked={cell.status === "HEAT_TREATMENT"}
+                               onCheckedChange={async (e) => {
+  const checked = e.checked === true;
+
+  const newState = checked
+    ? "HEAT_TREATMENT"
+    : "NOT_STARTED";
+
+  // DB更新
+  await kanbanComplete.checkComplete(cell.id, newState);
+
+  // ★ これを追加（超重要）
+  setCells((prev) => {
+    const newCells = { ...prev };
+
+    Object.keys(newCells).forEach((cellId) => {
+      newCells[cellId] = newCells[cellId].map((c) =>
+        c.id === cell.id
+          ? { ...c, status: newState }
+          : c
+      );
+    });
+
+    return newCells;
+  });
+}}
+                              >
+                                <Flex align="center" gap={2}>
+                                  <Checkbox.Control />
+                                  <Checkbox.Label fontSize="xs" color="gray.700">
+                                    熱処理へ
+                                  </Checkbox.Label>
+                                </Flex>
+                                <Checkbox.HiddenInput />
+                              </Checkbox.Root>
                             </Box>
                           </Draggable>
                         );
@@ -114,19 +207,44 @@ export const Kanban = () => {
             </Flex>
           ))}
 
-          <Droppable id="unassigned">
-            <Box mb={6} p={4} bg="white" borderWidth="1px" borderRadius="xl" borderColor="gray.200">
+          <Droppable id={unassigned} key={unassigned}>
+            <Box w="100%" minH="120px" p={2} mx={1} bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
               <Text fontSize="sm" fontWeight="bold" mb={2} color="gray.600">
                 未割り当て
               </Text>
 
-              <Flex wrap="wrap">
-                <Box p={2} bg="gray.50" border="1px dashed" borderColor="gray.300" borderRadius="md" w="100%" textAlign="center">
-                  <Text fontSize="xs" color="gray.400">
-                    ここにドラッグで戻す（仮）
-                  </Text>
-                </Box>
-              </Flex>
+              {(cells[unassigned] || []).length === 0 && (
+                <Text fontSize="xs" color="gray.400" textAlign="center">
+                  なし
+                </Text>
+              )}
+
+              {(cells[unassigned] || []).map((card) => (
+                <Draggable key={card.id} id={card.id}>
+                  <Box p={2} mb={2} bg="gray.50" borderRadius="md" border="1px solid" borderColor="gray.200" fontSize="sm" cursor="grab" _hover={{ bg: "gray.100" }} _active={{ cursor: "grabbing" }}>
+                    <Text>{card.productName}</Text>
+                    <Text>{card.quantity}本</Text>
+                    <Text>{card.deadline}</Text>
+                    <Checkbox.Root
+                      size="sm"
+                      colorPalette="cyan"
+                      onCheckedChange={(e) => {
+                        if (e.checked) {
+                          // 処理
+                        }
+                      }}
+                    >
+                      <Flex align="center" gap={2}>
+                        <Checkbox.Control />
+                        <Checkbox.Label fontSize="xs" color="gray.700">
+                          熱処理へ
+                        </Checkbox.Label>
+                      </Flex>
+                      <Checkbox.HiddenInput />
+                    </Checkbox.Root>
+                  </Box>
+                </Draggable>
+              ))}
             </Box>
           </Droppable>
         </Box>

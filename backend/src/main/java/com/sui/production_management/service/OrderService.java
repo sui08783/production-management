@@ -2,7 +2,6 @@ package com.sui.production_management.service;
 
 import com.sui.production_management.Entity.Order;
 import com.sui.production_management.dto.OrderRequest;
-import java.time.LocalDate;
 import java.util.List;
 
 
@@ -15,4 +14,7 @@ public interface OrderService {
   void deleteOrder(Long id);
 
  void updateOrder(Long id, Order order);
+
+void kanbanUpdate(Long id,Order status,Order days, Order order);
+
 }
