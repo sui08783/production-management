@@ -6,7 +6,7 @@ export type Order = {
   machineName: string;
   status: OrderStatus;
   days: string;
-  position: string;
+  position: number;
   deadline: string;
   quantity: number;
   createDay: string;

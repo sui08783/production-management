@@ -1,6 +1,6 @@
 import { HStack, Table } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
-import type { Order } from "@/types/order";
+import type { Order } from "@/types/Order";
 import { useUpdateOrder } from "@/hooks/useUpdateOrder";
 import { orderStatus } from "@/constains/orderStatus";
 import { DeleteOrderDialog } from "./DeleteOrderDialog";
@@ -31,14 +31,28 @@ export const OrderRow = memo((props: Props) => {
 
   return (
     <Table.Row key={order.id} _hover={{ bg: "gray.50" }}>
-      <Table.Cell>{order.id}</Table.Cell>
-      <Table.Cell>{order.productName}</Table.Cell>
-      <Table.Cell>{order.machineName}</Table.Cell>
-      <Table.Cell>{orderStatus[order.status]}</Table.Cell>
-      <Table.Cell>{order.deadline}</Table.Cell>
-      <Table.Cell fontWeight="bold">{order.quantity}</Table.Cell>
-      <Table.Cell>{order.createDay}</Table.Cell>
-      <Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
+        {order.id}
+      </Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
+        {order.productName}
+      </Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
+        {order.machineName}
+      </Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
+        {orderStatus[order.status]}
+      </Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
+        {order.deadline}
+      </Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
+        {order.quantity}
+      </Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
+        {order.createDay}
+      </Table.Cell>
+      <Table.Cell fontSize="md" fontWeight="bold" py={4}>
         <HStack gap="2" justify="center">
           {/* 編集用ダイアログ */}
           <UpdataOrderDialog

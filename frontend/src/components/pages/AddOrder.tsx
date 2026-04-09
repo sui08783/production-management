@@ -2,13 +2,16 @@ import { memo, useState } from "react";
 import { Box, Button, Field, Heading, Input, Portal, Select, Stack } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { orderStatusList } from "@/constains/orderStatus";
+import { HeaderLayout } from "../templates/HeaderLayout";
+import { machineList } from "@/constains/MachineList";
+import type { Machine } from "@/types/Machine";
 
 export const AddOrder = memo(() => {
   const [productName, setProductName] = useState("");
   const [machineName, setMachineName] = useState("");
   const [status, setStatus] = useState("NOT_STARTED");
   const [deadline, setDeadline] = useState("");
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>();
 
   const sendData = async () => {
     try {
@@ -32,7 +35,7 @@ export const AddOrder = memo(() => {
 
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 200);
 
       return true;
     } catch (err) {
@@ -46,10 +49,10 @@ export const AddOrder = memo(() => {
     }
   };
   return (
-    <>
+    <HeaderLayout>
       <Box maxW="400px" mx="auto" mt="60px" p="8" borderWidth="1px" borderRadius="xl" shadow="md">
         <Heading size="lg" mb="6" textAlign="center">
-          注文登録
+          工程登録
         </Heading>
 
         <Stack gap="4">
@@ -60,10 +63,35 @@ export const AddOrder = memo(() => {
 
           <Field.Root>
             <Field.Label>機械名</Field.Label>
-            <Input value={machineName} onChange={(e) => setMachineName(e.target.value)} placeholder="機械名を入力" />
+
+            <Select.Root collection={machineList} onValueChange={(e) => setMachineName(e.value[0] as Machine)}>
+              <Select.HiddenSelect />
+
+              <Select.Control>
+                <Select.Trigger>
+                  <Select.ValueText placeholder="機械名を選択" />
+                </Select.Trigger>
+                <Select.IndicatorGroup>
+                  <Select.Indicator />
+                </Select.IndicatorGroup>
+              </Select.Control>
+
+              <Portal>
+                <Select.Positioner>
+                  <Select.Content>
+                    {machineList.items.map((item) => (
+                      <Select.Item item={item} key={item.value}>
+                        {item.label}
+                        <Select.ItemIndicator />
+                      </Select.Item>
+                    ))}
+                  </Select.Content>
+                </Select.Positioner>
+              </Portal>
+            </Select.Root>
           </Field.Root>
 
-          <Select.Root key="sm" size="sm" collection={orderStatusList} onValueChange={(e) => setStatus(e.value[0])}>
+          <Select.Root collection={orderStatusList} onValueChange={(e) => setStatus(e.value[0])}>
             <Select.HiddenSelect />
             <Select.Label>加工状態</Select.Label>
             <Select.Control>
@@ -103,6 +131,6 @@ export const AddOrder = memo(() => {
           </Button>
         </Stack>
       </Box>
-    </>
+    </HeaderLayout>
   );
 });

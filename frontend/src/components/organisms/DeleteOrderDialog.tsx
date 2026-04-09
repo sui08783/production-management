@@ -1,7 +1,7 @@
 import { useDeleteOrder } from "@/hooks/useDeleteOrder";
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { toaster } from "../ui/toaster";
-import type { Order } from "@/types/order";
+import type { Order } from "@/types/Order";
 import { memo } from "react";
 
 type Props = {
@@ -14,9 +14,9 @@ export const DeleteOrderDialog = memo((props: Props) => {
   const { deleteOrder } = useDeleteOrder();
 
   return (
-    <Dialog.Root key="sm" size="sm">
+    <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button size="xs" colorPalette="red">
+        <Button size="lg" fontSize="md" colorPalette="red">
           削除
         </Button>
       </Dialog.Trigger>

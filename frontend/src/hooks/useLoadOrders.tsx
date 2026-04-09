@@ -1,4 +1,5 @@
-import type { Order } from "@/types/order";
+
+import type { Order } from "@/types/Order";
 import { useEffect, useState } from "react";
 
 export const useLoadOrders = () => {

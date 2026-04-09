@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Dialog, Field, Input, Stack } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
-import type { Order } from "@/types/order";
+import type { Order } from "@/types/Order";
 
 type Props = {
   order: Order;

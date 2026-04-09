@@ -4,7 +4,12 @@ export const useKanbanComplete = () => {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [status, setStatus] = useState("");
 
-  const checkComplete = async (id, status) => {
+  type checkCompleteTS = {
+    id: number;
+    status: string;
+  };
+
+  const checkComplete = async ({ id, status }: checkCompleteTS) => {
     try {
       const res = await fetch(`http://localhost:8080/kanban/${id}`, {
         method: "PUT",

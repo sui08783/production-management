@@ -1,7 +1,7 @@
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { memo } from "react";
 import { EditOrderDialog } from "./EditOrderDialog";
-import type { Order } from "@/types/order";
+import type { Order } from "@/types/Order";
 import { orderStatus } from "@/constains/orderStatus";
 import { toaster } from "../ui/toaster";
 
@@ -28,11 +28,12 @@ export const UpdataOrderDialog = memo((props: Props) => {
   const { order, loadOrders, editingOrder, setEditingOrder, updateData, productName, machineName, deadline, quantity, setProductName, setMachineName, setStatus, setDeadline, setQuantity } = props;
 
   return (
-    <Dialog.Root size="md">
+    <Dialog.Root size="lg">
       <Dialog.Trigger asChild>
         <Button
-          size="xs"
+          size="lg"
           colorPalette="blue"
+          fontSize="md"
           onClick={() => {
             setEditingOrder(order);
           }}

@@ -1,15 +1,14 @@
-import { useState } from "react";
-
 export const useKanbanUpdate = () => {
-  const [editingId, setEditingId] = useState<number | null>(null);
+  type kanbanUpdateData = {
+    cardId: number;
+    machine: string;
+    day: string;
+    newPosition: number;
+  };
 
-  const [machineName, setMachineName] = useState("");
-  const [status, setStatus] = useState("");
-  const [days, setDays] = useState("");
-
-  const updateData = async (id, machine, day, position) => {
+  const updateData = async ({ cardId, machine, day, newPosition }: kanbanUpdateData) => {
     try {
-      const res = await fetch(`http://localhost:8080/kanban/${id}`, {
+      const res = await fetch(`http://localhost:8080/kanban/${cardId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -17,7 +16,7 @@ export const useKanbanUpdate = () => {
         body: JSON.stringify({
           machineName: machine ?? "UNASSIGNED",
           days: day ?? "UNASSIGNED",
-          position: position,
+          position: newPosition,
         }),
       });
 
@@ -26,19 +25,12 @@ export const useKanbanUpdate = () => {
       }
       return true;
     } catch (err) {
+      console.error(err);
       return false;
     }
   };
 
   return {
     updateData,
-    editingId,
-    setEditingId,
-    machineName,
-    setMachineName,
-    status,
-    setStatus,
-    days,
-    setDays,
   };
 };

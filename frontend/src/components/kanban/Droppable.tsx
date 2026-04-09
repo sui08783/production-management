@@ -1,15 +1,29 @@
 import { useDroppable } from "@dnd-kit/core";
 
-export const Droppable = (props) => {
-  const { isOver, setNodeRef } = useDroppable({
+/**
+ *
+ * dnd-kit
+ *  ドロップ可能な領域を定義するためのコンポーネント
+ * 
+ * 
+ * @param props.id - ドロップ可能なエリアを識別するためのID
+ *
+ * @param props.children - ドロップ領域ろして扱う要素
+ *
+ */
+
+type Props = {
+  id: string | number;
+  children: React.ReactNode;
+};
+
+export const Droppable = (props: Props) => {
+  const { setNodeRef } = useDroppable({
     id: props.id,
   });
-  const style = {
-    color: isOver ? "green" : undefined,
-  };
 
   return (
-    <div ref={setNodeRef} style={props.style}>
+    <div ref={setNodeRef} >
       {props.children}
     </div>
   );
