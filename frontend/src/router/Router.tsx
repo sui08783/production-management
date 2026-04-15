@@ -4,15 +4,19 @@ import { Route, Routes } from "react-router-dom";
 import { Page404 } from "@/components/pages/Page404";
 import { AddOrder } from "../components/pages/AddOrder";
 import { OrderList } from "@/components/pages/OrderList";
-import { KanbanPage } from "@/components/pages/KanbanPage";
-
+import { Kanban } from "@/components/pages/Kanban";
+import { Login } from "@/components/pages/Login";
 export const Router = memo(() => {
+  const handleLogin = (username: string, password: string) => {
+    console.log("Login:", username, password);
+  };
   return (
     <Routes>
       <Route path="/" element={<OrderList />}></Route>
       <Route path="/add" element={<AddOrder />}></Route>
       <Route path="/orders" element={<OrderList />}></Route>
-      <Route path="/kanban" element={<KanbanPage />}></Route>
+      <Route path="/kanban" element={<Kanban />}></Route>
+      <Route path="/login" element={<Login onSubmit={handleLogin} />}></Route>
 
       <Route path="*" element={<Page404 />}></Route>
     </Routes>
