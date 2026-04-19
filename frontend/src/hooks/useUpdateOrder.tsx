@@ -13,7 +13,7 @@ export const useUpdateOrder = () => {
     if (editingId == null) return false;
 
     try {
-      const res = await fetch(`http://localhost:8080/orders/${editingId}`, {
+      const res = await fetch(`/api/orders/${editingId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

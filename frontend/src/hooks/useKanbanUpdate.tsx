@@ -8,7 +8,7 @@ export const useKanbanUpdate = () => {
 
   const updateData = async ({ cardId, machine, day, newPosition }: kanbanUpdateData) => {
     try {
-      const res = await fetch(`http://localhost:8080/kanban/${cardId}`, {
+      const res = await fetch(`/api/kanban/${cardId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

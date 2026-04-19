@@ -4,7 +4,7 @@ export const useDeleteOrder = () => {
     if (id == null) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/orders/${id}`, {
+      const res = await fetch(`/api/orders/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -7,16 +7,13 @@ import { OrderList } from "@/components/pages/OrderList";
 import { Kanban } from "@/components/pages/Kanban";
 import { Login } from "@/components/pages/Login";
 export const Router = memo(() => {
-  const handleLogin = (username: string, password: string) => {
-    console.log("Login:", username, password);
-  };
+
   return (
     <Routes>
       <Route path="/" element={<OrderList />}></Route>
       <Route path="/add" element={<AddOrder />}></Route>
-      <Route path="/orders" element={<OrderList />}></Route>
       <Route path="/kanban" element={<Kanban />}></Route>
-      <Route path="/login" element={<Login onSubmit={handleLogin} />}></Route>
+      <Route path="/login" element={<Login  />}></Route>
 
       <Route path="*" element={<Page404 />}></Route>
     </Routes>

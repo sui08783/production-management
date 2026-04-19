@@ -1,14 +1,41 @@
-import { Flex, Heading, Link, Spacer, Box } from "@chakra-ui/react";
+import { Flex, Heading, Link, Spacer, Box, Button } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [username, setUsername] = useState("");
+
+  // ユーザーのログイン状態を取得し、ログインしている状態ならユーザー名を取得する。
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch("/api/me");
+
+      if (res.ok) {
+        const name = await res.text();
+        setUsername(name);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  //ログアウト処理
+  //ログアウトしたらログイン画面へ遷移
+  const logout = async () => {
+    await fetch("/api/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    navigate("/login");
+  };
 
   const menu = [
-    { label: "工程一覧", path: "/orders" },
+    { label: "工程一覧", path: "/" },
     { label: "工程追加", path: "/add" },
-    { label: "カンバン", path: "/kanban" },
+    { label: "週間スケジュール", path: "/kanban" },
   ];
 
   return (
@@ -30,6 +57,15 @@ export const Header = () => {
               </Link>
             );
           })}
+          <Box display="flex" alignItems="center" gap={3}>
+            <Box px={3} py={1} bg="gray.100" borderRadius="full" fontSize="sm" color="gray.700">
+              ログイン中：{username}
+            </Box>
+
+            <Button onClick={logout} size="sm" variant="outline" colorPalette="gray" borderRadius="md">
+              ログアウト
+            </Button>
+          </Box>
         </Flex>
       </Flex>
     </Box>

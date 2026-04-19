@@ -11,7 +11,7 @@ export const useKanbanComplete = () => {
 
   const checkComplete = async ({ id, status }: checkCompleteTS) => {
     try {
-      const res = await fetch(`http://localhost:8080/kanban/${id}`, {
+      const res = await fetch(`/api/kanban/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

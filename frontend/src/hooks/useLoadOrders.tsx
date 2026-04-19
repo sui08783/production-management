@@ -1,4 +1,3 @@
-
 import type { Order } from "@/types/Order";
 import { useEffect, useState } from "react";
 
@@ -6,7 +5,9 @@ export const useLoadOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
 
   const loadOrders = async () => {
-    const res = await fetch("http://localhost:8080/orders");
+    const res = await fetch("/api/orders", {
+      credentials: "include",
+    });
     const data = await res.json();
     setOrders(data);
   };

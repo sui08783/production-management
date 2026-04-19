@@ -15,13 +15,17 @@ export const AddOrder = memo(() => {
 
   const sendData = async () => {
     try {
-      const res = await fetch("http://localhost:8080/orders", {
+      const res = await fetch("/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ productName: productName, machineName: machineName, status: status, deadline: deadline, quantity: quantity }),
-      });
+      }
+    );
+
+
+      
 
       if (!res.ok) {
         throw new Error("登録失敗しました");
