@@ -2,8 +2,8 @@ import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { memo } from "react";
 import { EditOrderDialog } from "./EditOrderDialog";
 import type { Order } from "@/types/Order";
-import { orderStatus } from "@/constains/orderStatus";
-import { toaster } from "../ui/toaster";
+import { orderStatus } from "@/constants/orderStatus";
+import { toaster } from "@/components/ui/toaster";
 
 type Props = {
   order: Order;

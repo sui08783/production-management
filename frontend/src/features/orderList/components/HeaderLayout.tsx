@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { Header } from "../organisms/Header";
+import { Header } from "./Header";
 import { type ReactNode } from "react";
 
 type Props = {

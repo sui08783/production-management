@@ -1,18 +1,18 @@
 import { DndContext } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
-import { Droppable } from "../kanban/Droppable";
-import { Draggable } from "../kanban/Draggable";
+import { Droppable } from "../features/kanban/components/Droppable";
+import { Draggable } from "../features/kanban/components/Draggable";
 import { Box, Text, Flex } from "@chakra-ui/react";
-import { useLoadOrders } from "@/hooks/useLoadOrders";
-import { useKanbanUpdate } from "@/hooks/useKanbanUpdate";
-import { useKanbanComplete } from "@/hooks/useKanbanComplete";
+import { useLoadOrders } from "@/features/orderList/hooks/useLoadOrders";
+import { useKanbanUpdate } from "@/features/kanban/hooks/useKanbanUpdate";
+import { useKanbanComplete } from "@/features/kanban/hooks/useKanbanComplete";
 import type { Order } from "@/types/Order";
 import type { Machine } from "@/types/Machine";
 import type { Days } from "@/types/Days";
-import { KanbanCard } from "../kanban/KanbanCards";
+import { KanbanCard } from "../features/kanban/components/KanbanCards";
 import type { OrderStatus } from "@/types/OrderStatus";
-import { useKanbanDrag } from "@/hooks/useKanbanDrag";
-import { HeaderLayout } from "../templates/HeaderLayout";
+import { useKanbanDrag } from "@/features/kanban/hooks/useKanbanDrag";
+import { HeaderLayout } from "@/features/orderList/components/HeaderLayout";
 
 /**
  * カンバンボードの表示をするページコンポーネント
@@ -96,9 +96,9 @@ export const Kanban = () => {
     <HeaderLayout>
       <DndContext onDragEnd={handleDragEnd}>
         <Box bg="gray.100" minH="100vh" p={6}>
-          <Box maxW="1400px" mx="auto" p={4} bg="white" borderRadius="xl" boxShadow="md" overflow="hidden" >
+          <Box maxW="1400px" mx="auto" p={4} bg="white" borderRadius="xl" boxShadow="md" overflow="hidden">
             {/* ===== グリッド ===== */}
-            <Box  overflowX="auto">
+            <Box overflowX="auto">
               <Box display="grid" gridTemplateColumns={GRID_TEMPLATE} gap={2}>
                 {/* ヘッダー */}
                 <Box />
@@ -121,7 +121,7 @@ export const Kanban = () => {
                       const cellId = `${machine}-${day}`;
                       return (
                         <Droppable id={cellId} key={cellId}>
-                          <Box minH="220px"     p={5} bg="gray.50" border="1px solid" borderColor="gray.200" borderRadius="lg" _hover={{ bg: "blue.50" }}>
+                          <Box minH="220px" p={5} bg="gray.50" border="1px solid" borderColor="gray.200" borderRadius="lg" _hover={{ bg: "blue.50" }}>
                             <Flex direction="column" gap={2} align="center">
                               {(cells[cellId] || []).map((cell) => (
                                 <Draggable key={cell.id} id={cell.id}>

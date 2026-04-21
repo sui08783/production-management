@@ -1,8 +1,9 @@
-import { useDeleteOrder } from "@/hooks/useDeleteOrder";
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
-import { toaster } from "../ui/toaster";
-import type { Order } from "@/types/Order";
+
 import { memo } from "react";
+import { toaster } from "@/components/ui/toaster";
+import type { Order } from "@/types/Order";
+import { useDeleteOrder } from "../hooks/useDeleteOrder";
 
 type Props = {
   order: Order;

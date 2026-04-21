@@ -1,7 +1,7 @@
 import { Box, Button, Field, Input, Stack, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toaster } from "../ui/toaster";
+import { toaster } from "../components/ui/toaster";
 
 export const Login = () => {
   const [username, setUsername] = useState("");

@@ -1,12 +1,12 @@
-import { useLoadOrders } from "@/hooks/useLoadOrders";
+import { useLoadOrders } from "@/features/orderList/hooks/useLoadOrders";
 import type { Order } from "@/types/Order";
 
 import { Box, Heading, Table } from "@chakra-ui/react";
 import { memo } from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { OrderRow } from "@/components/organisms/OrderRow";
-import { OrderTableHeader } from "@/components/molecules/OrderTableHeader";
-import { HeaderLayout } from "../templates/HeaderLayout";
+import { OrderRow } from "@/features/orderList/components/OrderRow";
+import { OrderTableHeader } from "@/features/orderList/components/OrderTableHeader";
+import { HeaderLayout } from "@/features/orderList/components/HeaderLayout";
 
 export const OrderList = memo(() => {
   const { orders, loadOrders } = useLoadOrders();

@@ -1,10 +1,11 @@
 import { memo, useState } from "react";
 import { Box, Button, Field, Heading, Input, Portal, Select, Stack } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
-import { orderStatusList } from "@/constains/orderStatus";
-import { HeaderLayout } from "../templates/HeaderLayout";
-import { machineList } from "@/constains/MachineList";
+import { orderStatusList } from "@/constants/orderStatus";
+
+import { machineList } from "@/constants/MachineList";
 import type { Machine } from "@/types/Machine";
+import { HeaderLayout } from "@/features/orderList/components/HeaderLayout";
 
 export const AddOrder = memo(() => {
   const [productName, setProductName] = useState("");
@@ -21,11 +22,7 @@ export const AddOrder = memo(() => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ productName: productName, machineName: machineName, status: status, deadline: deadline, quantity: quantity }),
-      }
-    );
-
-
-      
+      });
 
       if (!res.ok) {
         throw new Error("登録失敗しました");

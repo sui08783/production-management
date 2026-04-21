@@ -1,5 +1,5 @@
 import type { Order } from "../types/Order";
-import { useLoadOrders } from "@/hooks/useLoadOrders";
+import { useLoadOrders } from "@/features/orderList/hooks/useLoadOrders";
 
 export const ApiFetch = () => {
   const { orders } = useLoadOrders();

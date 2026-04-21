@@ -1,8 +1,8 @@
 import { HStack, Table } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 import type { Order } from "@/types/Order";
-import { useUpdateOrder } from "@/hooks/useUpdateOrder";
-import { orderStatus } from "@/constains/orderStatus";
+import { useUpdateOrder } from "@/features/orderList/hooks/useUpdateOrder";
+import { orderStatus } from "@/constants/orderStatus";
 import { DeleteOrderDialog } from "./DeleteOrderDialog";
 import { UpdataOrderDialog } from "./UpdateOrderDialog";
 

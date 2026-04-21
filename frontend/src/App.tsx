@@ -28,6 +28,7 @@ export default function App() {
     checkLogin();
   }, []);
 
+  // ローディング画面
   if (isLoading) {
     return (
       <Center h="100vh">
