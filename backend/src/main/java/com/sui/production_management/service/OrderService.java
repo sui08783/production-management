@@ -13,7 +13,7 @@ public interface OrderService {
 
   void deleteOrder(Long id);
 
- void updateOrder(Long id, Order order);
+  void updateOrder(Long id, OrderRequest request);
 
 void kanbanUpdate(Long id,Order status,Order days, Order order);
 

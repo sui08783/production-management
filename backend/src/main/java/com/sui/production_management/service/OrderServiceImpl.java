@@ -48,18 +48,17 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   @Transactional
-  public void updateOrder(Long id, Order order) {
+  public void updateOrder(Long id, OrderRequest request) {
     Optional<Order> optionalEntity = orderRepository.findById(id);
+
     if (optionalEntity.isPresent()) {
       Order entity = optionalEntity.get();
 
-      entity.setProductName(order.getProductName());
-      entity.setMachineName(order.getMachineName());
-      entity.setStatus(order.getStatus());
-      entity.setDeadline(order.getDeadline());
-      entity.setQuantity(order.getQuantity());
-
-
+      entity.setProductName(request.getProductName());
+      entity.setMachineName(MachineAssign.valueOf(request.getMachineName()));
+      entity.setStatus(OrderStatus.valueOf(request.getStatus()));
+      entity.setDeadline(request.getDeadline());
+      entity.setQuantity(request.getQuantity());
     }
   }
 

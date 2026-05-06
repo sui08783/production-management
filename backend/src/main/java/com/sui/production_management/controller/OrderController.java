@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/orders")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/orders")
 public class
 OrderController {
 
@@ -42,8 +41,8 @@ OrderController {
   }
 
   @PutMapping("/{id}")
-  public void updateOrder(@PathVariable Long id, @RequestBody Order order) {
-    orderService.updateOrder(id, order);
+  public void updateOrder(@PathVariable Long id, @RequestBody OrderRequest request) {
+    orderService.updateOrder(id, request);
   }
 
 

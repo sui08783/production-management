@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/kanban")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/kanban")
 public class KanbanController {
 
   public final OrderService orderService;
