@@ -7,4 +7,4 @@ COPY . .
 RUN chmod +x gradlew
 RUN ./gradlew clean build --no-daemon -x test
 
-CMD ["java", "-jar", "build/libs/*.jar"]
+CMD ["java", "-jar", "build/libs/production-management-0.0.1-SNAPSHOT.jar"]
