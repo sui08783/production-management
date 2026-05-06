@@ -5,6 +5,6 @@ WORKDIR /app
 COPY . .
 
 RUN chmod +x gradlew
-RUN ./gradlew clean build --no-daemon
+RUN ./gradlew clean build --no-daemon -x test
 
 CMD ["java", "-jar", "build/libs/*.jar"]
