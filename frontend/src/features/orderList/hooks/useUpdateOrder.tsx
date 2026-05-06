@@ -13,6 +13,9 @@ export const useUpdateOrder = () => {
     if (editingId == null) return false;
 
     try {
+
+
+
       const res = await fetch(`/api/orders/${editingId}`, {
         method: "PUT",
         headers: {
@@ -29,5 +32,9 @@ export const useUpdateOrder = () => {
       return false;
     }
   };
+
+  
+  
+
   return { updateData, editingId, setEditingId, productName, setProductName, machineName, setMachineName, status, setStatus, deadline, setDeadline, quantity, setQuantity, response, setResponse };
 };

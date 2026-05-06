@@ -34,7 +34,7 @@ export const Header = () => {
 
   const menu = [
     { label: "工程一覧", path: "/" },
-    { label: "工程追加", path: "/add" },
+    { label: "工程登録", path: "/add" },
     { label: "週間スケジュール", path: "/kanban" },
   ];
 

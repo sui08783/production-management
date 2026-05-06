@@ -2,7 +2,6 @@ import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { memo } from "react";
 import { EditOrderDialog } from "./EditOrderDialog";
 import type { Order } from "@/types/Order";
-import { orderStatus } from "@/constants/orderStatus";
 import { toaster } from "@/components/ui/toaster";
 
 type Props = {
@@ -25,7 +24,7 @@ type Props = {
 };
 
 export const UpdataOrderDialog = memo((props: Props) => {
-  const { order, loadOrders, editingOrder, setEditingOrder, updateData, productName, machineName, deadline, quantity, setProductName, setMachineName, setStatus, setDeadline, setQuantity } = props;
+  const { order, loadOrders, editingOrder, setEditingOrder, updateData, productName, machineName, status, deadline, quantity, setProductName, setMachineName, setStatus, setDeadline, setQuantity } = props;
 
   return (
     <Dialog.Root size="lg">
@@ -52,19 +51,7 @@ export const UpdataOrderDialog = memo((props: Props) => {
 
             {/* 工程データがあるときに、編集用のダイアログを表示 */}
             {editingOrder && (
-              <EditOrderDialog
-                order={editingOrder}
-                productName={productName}
-                machineName={machineName}
-                status={orderStatus[order.status]}
-                deadline={deadline}
-                quantity={quantity}
-                setProductName={setProductName}
-                setMachineName={setMachineName}
-                setStatus={setStatus}
-                setDeadline={setDeadline}
-                setQuantity={setQuantity}
-              />
+              <EditOrderDialog order={editingOrder} productName={productName} machineName={machineName} status={status} deadline={deadline} quantity={quantity} setProductName={setProductName} setMachineName={setMachineName} setStatus={setStatus} setDeadline={setDeadline} setQuantity={setQuantity} />
             )}
 
             <Dialog.Footer>

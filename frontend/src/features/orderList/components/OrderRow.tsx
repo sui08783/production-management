@@ -29,6 +29,8 @@ export const OrderRow = memo((props: Props) => {
     setQuantity(editingOrder.quantity);
   }, [editingOrder]);
 
+ 
+
   return (
     <Table.Row key={order.id} _hover={{ bg: "gray.50" }}>
       <Table.Cell fontSize="md" fontWeight="bold" py={4}>

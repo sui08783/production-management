@@ -1,5 +1,5 @@
 import { DndContext } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Droppable } from "../features/kanban/components/Droppable";
 import { Draggable } from "../features/kanban/components/Draggable";
 import { Box, Text, Flex } from "@chakra-ui/react";
@@ -110,7 +110,7 @@ export const Kanban = () => {
 
                 {/* 行 */}
                 {machines.map((machine) => (
-                  <>
+                  <Fragment key={machine}>
                     {/* ラベル */}
                     <Box key={machine} display="flex" alignItems="center" justifyContent="center" fontWeight="bold" bg="gray.200" borderRadius="md">
                       {machine}
@@ -141,7 +141,7 @@ export const Kanban = () => {
                         </Droppable>
                       );
                     })}
-                  </>
+                  </Fragment>
                 ))}
               </Box>
             </Box>

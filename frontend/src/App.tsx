@@ -1,24 +1,27 @@
-// App.tsx
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useNavigate, useLocation } from "react-router-dom";
 import { Router } from "./router/Router";
 import { useEffect, useState } from "react";
 import { Center, Spinner } from "@chakra-ui/react";
 
-export default function App() {
+function AppInner() {
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    //ログインページならチェックしない
-    if (window.location.pathname === "/login") {
+    // ログインページならチェックしない
+    if (location.pathname === "/login") {
       setIsLoading(false);
       return;
     }
 
     const checkLogin = async () => {
-      const res = await fetch("/api/me");
+      const res = await fetch("/api/me", {
+        credentials: "include",
+      });
 
       if (res.status === 401) {
-        window.location.href = "/login";
+        navigate("/login"); 
         return;
       }
 
@@ -26,9 +29,8 @@ export default function App() {
     };
 
     checkLogin();
-  }, []);
+  }, [location.pathname]);
 
-  // ローディング画面
   if (isLoading) {
     return (
       <Center h="100vh">
@@ -37,9 +39,13 @@ export default function App() {
     );
   }
 
+  return <Router />;
+}
+
+export default function App() {
   return (
     <BrowserRouter>
-      <Router />
+      <AppInner />
     </BrowserRouter>
   );
 }
