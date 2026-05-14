@@ -6,7 +6,7 @@
 <br><br>
 
 ## 目次
-
+- [デモURL](#デモURL)
 - [概要](#概要)
 - [背景・課題](#背景課題)
 - [効果](#効果)
@@ -37,6 +37,17 @@
   - [直感的な操作性・UI](#直感的な操作性ui)
   - [ログイン機能](#ログイン機能)
 - [今後の開発予定](#今後の開発予定)
+<br><br>
+## デモURL
+https://production-management-1.onrender.com
+
+ログインには、下記アカウントをお使いください。<br>
+現在、どちらのアカウントでログインしても権限に違いはありません。
+
+| ユーザー名 | パスワード |
+|---|---|
+| admin | admin1234 |
+| user | user1234 |
 
 <br><br>
 
@@ -121,12 +132,20 @@
 
 ### 工程登録画面
 
-![登録](./images/add-order.png)
+
+
+https://github.com/user-attachments/assets/28050f0e-3646-426d-9d99-b038304ac8b9
+
+
 工程を新規で追加します。
 
 <br><br>
 
 ### 週間スケジュール画面
+
+
+
+https://github.com/user-attachments/assets/5cfe2d9d-7c12-425d-b99a-07144a843691
 
 
 
