@@ -42,7 +42,7 @@ export const Header = () => {
     <Box as="header" bg="white" borderBottom="1px solid" borderColor="gray.200" boxShadow="sm">
       <Flex h="60px" px={6} align="center" maxW="1400px" mx="auto">
         <Heading size="md" cursor="pointer" onClick={() => navigate("/")}>
-          工程管理アプリ
+          バネ製造工程管理アプリ
         </Heading>
 
         <Spacer />
@@ -62,7 +62,7 @@ export const Header = () => {
               ログイン中：{username}
             </Box>
 
-            <Button onClick={logout} size="sm" variant="outline" colorPalette="gray" borderRadius="md">
+            <Button onClick={logout} size="sm" variant="outline" bg="red.500" color="white" borderRadius="md">
               ログアウト
             </Button>
           </Box>

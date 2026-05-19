@@ -2,6 +2,7 @@ package com.sui.production_management.config;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
 
   @Bean
   PasswordEncoder passwordEncoder() {
@@ -111,6 +113,7 @@ public class SecurityConfig {
 
     return http.build();
   }
+
 
 
 }

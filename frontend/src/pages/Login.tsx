@@ -46,6 +46,39 @@ export const Login = () => {
     }
   };
 
+  const handleSubmitGuest = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        username: "guest",
+        password: "guest",
+      }),
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      toaster.create({
+        description: "ログインに成功しました",
+        type: "success",
+        closable: true,
+      });
+      console.log("ログイン成功");
+      navigate("/");
+    } else {
+      console.log("ログイン失敗");
+      toaster.create({
+        description: "ログインに失敗しました。ユーザー名またはパスワードが違います。",
+        type: "error",
+        closable: true,
+      });
+    }
+  };
+
   return (
     <Box maxW="400px" mx="auto" mt="100px">
       <form onSubmit={handleSubmit}>
@@ -69,6 +102,15 @@ export const Login = () => {
           </Button>
         </Stack>
       </form>
+
+      <Box mt={6}>
+        <form onSubmit={handleSubmitGuest}>
+        
+          <Button type="submit" colorPalette="green" width="100%">
+            ゲストログイン
+          </Button>
+        </form>
+      </Box>
     </Box>
   );
 };

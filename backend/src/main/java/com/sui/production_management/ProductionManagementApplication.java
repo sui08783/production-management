@@ -13,6 +13,8 @@ public class ProductionManagementApplication {
 	}
 	@PostConstruct
 	public void init(){
-		TimeZone.setDefault(TimeZone.getTimeZone("JST"));
+		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Tokyo"));
 	}
+
+
 }
