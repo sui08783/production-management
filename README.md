@@ -1,4 +1,4 @@
-# バネ工程管理ツール
+# バネ製造工程管理アプリ
 
 本アプリケーションは、私が勤務する工場での工程管理における、情報共有の手間やタイムラグといった課題を解決するために開発したWebアプリケーションです。  
 工程情報をデジタル化しリアルタイムで共有できるようにするとともに、カンバン方式による直感的な操作で現場でも扱いやすい設計としています。
@@ -41,13 +41,16 @@
 ## デモURL
 https://production-management-1.onrender.com
 
-ログインには、下記アカウントをお使いください。<br>
+ログインはゲストログインボタンからログインできます。
+![ゲストログイン](./images/guest-login.jpg)
+
+ログインには、下記アカウントもお使いいただけます。<br>
 現在、どちらのアカウントでログインしても権限に違いはありません。
 
-| ユーザー名 | パスワード |
-|---|---|
-| admin | admin1234 |
-| user | user1234 |
+|No.| ユーザー名 | パスワード |
+|---|---|---|
+|1| admin | admin1234 |
+|2| user | user1234 |
 
 <br><br>
 
@@ -58,12 +61,7 @@ https://production-management-1.onrender.com
 
 <br><br>
 
-## 効果
 
-工程情報をWebアプリ上で一元管理することで、工場間でも常に最新の情報を共有できるようにしました。
-さらに、カンバン方式を採用し直感的な操作性を実現するとともに、リアルタイムで工程状況を把握できる仕組みを構築しています。
-
-<br><br>
 
 ## 期待される効果
 
@@ -188,7 +186,8 @@ CREATE DATABASE production_management;
 ```bash
 INSERT INTO users (name, username, password, role) VALUES
 ('管理者', 'admin', '$2a$10$Xt9HRztAmIDIXkQaunXBtO0mMBm7tL856zOj9H9CAUgaVF8qk0Ufi', 'ROLE_ADMIN'),
-('一般ユーザー', 'user', '$2a$10$cCTIKYzCIvlXkuTBfgAAYuOxENIPgxxwRFecUb//ZOY8NdxO5J6pu', 'ROLE_USER');
+('一般ユーザー', 'user', '$2a$10$cCTIKYzCIvlXkuTBfgAAYuOxENIPgxxwRFecUb//ZOY8NdxO5J6pu', 'ROLE_USER'),
+('ゲストユーザー', 'guest', '$2a$10$CKnqpm10DSC4qfzztnMYRusZR2edVqfcmcHTVXnxtGH1775DLt1Ry', 'ROLE_GUEST');
 ```
 
 #### 管理者
@@ -200,6 +199,11 @@ INSERT INTO users (name, username, password, role) VALUES
 
 - ユーザー名：user
 - パスワード：user1234
+
+##### ゲストユーザー(ゲストログイン用)
+
+- ユーザー名：guest
+- パスワード：guest
 
 ### 4.バックエンド起動
 
@@ -216,7 +220,8 @@ npm install
 npm run dev
 ```
 
-http://localhost:5173
+起動後、ブラウザで http://localhost:5173 を開いてください。
+(API は Vite のプロキシ経由で http://localhost:8080 に接続されます)
 
 <br><br>
 
