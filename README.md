@@ -6,6 +6,7 @@
 <br><br>
 
 ## 目次
+
 - [デモURL](#デモURL)
 - [概要](#概要)
 - [背景・課題](#背景課題)
@@ -17,6 +18,9 @@
   - [データベース](#データベース)
   - [インフラ](#インフラ)
   - [その他](#その他)
+- [データベース設計](#データベース設計)
+  - [ER図](#ER図)
+  - [設計上の工夫](#設計上の工夫)
 - [機能一覧](#機能一覧)
   - [工程管理機能](#工程管理機能)
   - [週間工程管理機能](#週間工程管理機能)
@@ -37,8 +41,10 @@
   - [直感的な操作性・UI](#直感的な操作性ui)
   - [ログイン機能](#ログイン機能)
 - [今後の開発予定](#今後の開発予定)
-<br><br>
+  <br><br>
+
 ## デモURL
+
 https://production-management-1.onrender.com
 
 ログインはゲストログインボタンからログインできます。
@@ -47,10 +53,10 @@ https://production-management-1.onrender.com
 ログインには、下記アカウントもお使いいただけます。<br>
 現在、どちらのアカウントでログインしても権限に違いはありません。
 
-|No.| ユーザー名 | パスワード |
-|---|---|---|
-|1| admin | admin1234 |
-|2| user | user1234 |
+| No. | ユーザー名 | パスワード |
+| --- | ---------- | ---------- |
+| 1   | admin      | admin1234  |
+| 2   | user       | user1234   |
 
 <br><br>
 
@@ -60,8 +66,6 @@ https://production-management-1.onrender.com
 この運用では、共有のたびに手間がかかるうえ、リアルタイム性に欠け、情報伝達にタイムラグが生じるという課題がありました。
 
 <br><br>
-
-
 
 ## 期待される効果
 
@@ -77,6 +81,7 @@ https://production-management-1.onrender.com
 
 - React（TypeScript）
 - Chakra UI
+- dnd kit
 
 ### バックエンド
 
@@ -93,6 +98,20 @@ https://production-management-1.onrender.com
 ### その他
 
 - Git / GitHub
+
+<br><br>
+
+## データベース設計
+
+### ER図
+
+![ER図](./images/er.jpg)
+
+### 設計上の工夫
+
+- 機械名・工程状態・曜日は固定値のためEnumで管理
+- 不正な値の登録を防止
+- マスタテーブルの増加を抑え、シンプルな設計を採用
 
 <br><br>
 
@@ -130,10 +149,7 @@ https://production-management-1.onrender.com
 
 ### 工程登録画面
 
-
-
 https://github.com/user-attachments/assets/28050f0e-3646-426d-9d99-b038304ac8b9
-
 
 工程を新規で追加します。
 
@@ -141,11 +157,7 @@ https://github.com/user-attachments/assets/28050f0e-3646-426d-9d99-b038304ac8b9
 
 ### 週間スケジュール画面
 
-
-
 https://github.com/user-attachments/assets/5cfe2d9d-7c12-425d-b99a-07144a843691
-
-
 
 工程をドラッグ＆ドロップで変更できます。
 
@@ -182,7 +194,9 @@ CREATE DATABASE production_management;
 ```
 
 ### 3. ユーザー情報の登録
+
 ※ テーブルはアプリ起動時に自動作成されます
+
 ```bash
 INSERT INTO users (name, username, password, role) VALUES
 ('管理者', 'admin', '$2a$10$Xt9HRztAmIDIXkQaunXBtO0mMBm7tL856zOj9H9CAUgaVF8qk0Ufi', 'ROLE_ADMIN'),
