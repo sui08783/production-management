@@ -149,14 +149,16 @@ https://production-management-1.onrender.com
 
 ### 工程登録画面
 
-https://github.com/user-attachments/assets/28050f0e-3646-426d-9d99-b038304ac8b9
+![工程登録](./images/add_process.gif)
 
 工程を新規で追加します。
 
 <br><br>
 
 ### 週間スケジュール画面
+![工程登録](./images/weekly.gif)
 
+#### 詳細動画
 https://github.com/user-attachments/assets/5cfe2d9d-7c12-425d-b99a-07144a843691
 
 工程をドラッグ＆ドロップで変更できます。
